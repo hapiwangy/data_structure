@@ -1,0 +1,77 @@
+class listnode:
+    def __init__(self,data):
+        self.data = data
+        self.next = None
+        return
+class singlelinkedlist:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+    def new_node(self, item):
+        ln = listnode(item)
+        return ln
+    def add_item(self,item):
+        if not isinstance(item, listnode):
+            item = listnode(item)
+        if self.head is None:
+            self.head = item
+        else:
+            self.tail.next = item
+        self.tail = item
+    def add_item_bts(self, item):
+        new_one = self.new_node(item)
+        if self.head == None:
+            self.add_item(new_one)
+        else:
+            temp = self.head
+            flag = 1
+            while flag and temp.next:
+                if temp.data > item:
+                    temp = temp.next
+                else:
+                    new_one.next = temp.next
+                    temp.next = new_one
+                    return
+            temp.next = new_one
+    def del_item(self, item):
+        ltemp = self.head
+        if self.head == None:
+            print("this is a null linkedlist.")
+            return
+        if self.head.data == item:
+            self.head = self.head.next
+            return
+        while ltemp != None:
+            if ltemp.next:
+                if ltemp.next.data == item:
+                    ltemp.next = ltemp.next.next
+                    return
+            ltemp = ltemp.next
+        print(f"{item} not in here")
+    def print_item(self):
+        ltemp = self.head
+        self.sort_linedlist()
+        while ltemp != None:
+            print(ltemp.data)
+            ltemp = ltemp.next
+    def sort_linedlist(self):
+        temp = self.head
+        while temp:
+            all = temp
+            while all:
+                if temp.data > all.data:
+                    temp.data, all.data = all.data, temp.data
+                all = all.next
+            temp = temp.next
+
+def main():
+    sll = singlelinkedlist()
+    sll.add_item_bts(17)
+    sll.add_item_bts(12)
+    sll.add_item_bts(15)
+    sll.del_item(17)
+    sll.print_item()
+
+if __name__ == "__main__":
+    main()
+
